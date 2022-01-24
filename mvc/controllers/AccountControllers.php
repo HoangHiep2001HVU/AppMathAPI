@@ -12,10 +12,8 @@
           public function Login($u, $p){
                $acount = $this->model("AccountModels");
 
-               $password = password_hash($p, PASSWORD_DEFAULT);
-
                $this->view("index", [
-                    "getData"=> $acount->LoginAcc($u, $password),
+                    "getData"=> $acount->LoginAcc($u, $p),
                 ]);
           }
 

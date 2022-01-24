@@ -20,8 +20,13 @@
             while($row = mysqli_fetch_assoc($result)){
                 $json_array[] = $row;
             }
-            
-            return $json_array;
+
+            if (password_verify($password, $json_array[0]["password"])){
+                return $json_array;
+            }
+            else{
+                return [];
+            }
             
         }
 
