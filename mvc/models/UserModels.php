@@ -30,11 +30,10 @@
 
             $result = mysqli_query($this->con, $sql);
             if(!$result){
-                echo $this->con->error;
-                return false;
+                return ["error"=> $this->con->error];
             }
 
-            return true;
+            return ["name"=> $name,"sex"=> $sex, "date"=> $date, "address"=> $address, "phone"=> $phone];
         }
     }
 ?>

@@ -31,18 +31,24 @@
                     $pass = $_POST["pass"];
                     $password = password_hash($pass, PASSWORD_DEFAULT);
 
-                    $_user = $user->InserUser($name, $sex, $date, $address, $phone);
-                    
-                    if($_user){
-
-                         $id_user = $user->GetId($name, $phone);
-                         $id_user = $id_user[0];
-                         $_acc = $acount->RegisterAccount($user_name, $password, $id_user["id"]);
-                         if($_acc){
-                              return true;
+                    if($acount->CheckUserName($user_name)==false){
+                         $_user = $user->InserUser($name, $sex, $date, $address, $phone);
+                         if(!empty($_user)){
+                              $id_user = $user->GetId($name, $phone);
+                              $id_user = $id_user[0];
+                              $_acc = $acount->RegisterAccount($user_name, $password, $id_user["id"]);
+                              if(!empty($_acc)){
+                                   $this->view("index", [
+                                        "getData"=> [$_user,$_acc],
+                                    ]);
+                              }
                          }
                     }
-                    return false;
+                    else{
+                         $this->view("index", [
+                              "getData"=> ["error"=>"User name đã tồn tại"],
+                          ]);
+                    }
                }
           }
 
@@ -54,7 +60,11 @@
                echo "InsertAccount";
           }
 
-          public function GetUser(){
+          public function LockAcc(){
+
+          }
+
+          public function OpenAcc(){
                
           }
      }

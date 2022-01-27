@@ -25,7 +25,7 @@
                 return $json_array;
             }
             else{
-                return [];
+                return ["error"=>"Mật khẩu hoặc tài khoản không đúng!"];
             }
             
         }
@@ -35,10 +35,25 @@
 
             $result = mysqli_query($this->con, $sql);
             if(!$result){
-                return false;
+                return ["error"=> $this->con->error];
             }
 
-            return true;
+            return ["user"=>$user_name, "pass"=> $password, "id_user"=> $id_user];
+        }
+
+        function CheckUserName($user_name){
+            $user = $this->GetAccount();
+
+            for($i=0; $i<count($user); $i++){
+                if($user[$i]["user_name"] == $user_name){
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        function CheckStatus(){
+            
         }
     }
 ?>
